@@ -59,7 +59,7 @@ export default async function SettingsPage() {
                                 <p className="text-xs uppercase tracking-widest font-semibold text-zinc-500">NO WALLETS REGISTERED</p>
                             </div>
                         ) : (
-                            wallets.map(wallet => (
+                            wallets.map((wallet: any) => (
                                 <div key={wallet.id} className="border border-black/10 dark:border-white/10 p-6 flex flex-col justify-between group hover:bg-black/5 dark:hover:bg-white/5 transition-colors relative overflow-hidden">
                                     <div className="absolute top-0 left-0 bottom-0 w-1" style={{ backgroundColor: wallet.color || '#2563eb' }} />
                                     <div className="flex justify-between items-start">
@@ -132,7 +132,7 @@ export default async function SettingsPage() {
                                     {expenseCategories.length === 0 ? (
                                         <p className="text-xs uppercase tracking-widest font-semibold text-zinc-500 py-2">NO CATEGORIES</p>
                                     ) : (
-                                        expenseCategories.map(c => (
+                                        expenseCategories.map((c: any) => (
                                             <div key={c.id} className="flex items-center justify-between py-2 group">
                                                 <div className="flex items-center gap-3">
                                                     <span className="w-2 h-2 rounded-full opacity-50 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: c.color || '#f43f5e' }} />
@@ -160,7 +160,7 @@ export default async function SettingsPage() {
                                     {incomeCategories.length === 0 ? (
                                         <p className="text-xs uppercase tracking-widest font-semibold text-zinc-500 py-2">NO CATEGORIES</p>
                                     ) : (
-                                        incomeCategories.map(c => (
+                                        incomeCategories.map((c: any) => (
                                             <div key={c.id} className="flex items-center justify-between py-2 group">
                                                 <div className="flex items-center gap-3">
                                                     <span className="w-2 h-2 rounded-full opacity-50 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: c.color || '#10b981' }} />

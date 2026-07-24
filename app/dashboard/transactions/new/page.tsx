@@ -47,7 +47,7 @@ export default async function NewTransactionPage() {
                     <div className="w-full md:w-3/4">
                         <select name="walletId" required className="flex w-full items-center justify-between border-0 bg-transparent py-2 text-sm md:text-base font-semibold uppercase tracking-widest focus:outline-none focus:text-blue-600 dark:focus:text-blue-500 rounded-none cursor-pointer px-0">
                             <option value="" className="text-zinc-500">SELECT SOURCE...</option>
-                            {wallets.map(w => <option key={w.id} value={w.id}>{w.name} (Rp {w.balance.toLocaleString('id-ID')})</option>)}
+                            {wallets.map((w: any) => <option key={w.id} value={w.id}>{w.name} (Rp {w.balance.toLocaleString('id-ID')})</option>)}
                         </select>
                     </div>
                 </div>
@@ -59,10 +59,10 @@ export default async function NewTransactionPage() {
                         <select name="categoryId" required className="flex w-full items-center justify-between border-0 bg-transparent py-2 text-sm md:text-base font-semibold uppercase tracking-widest focus:outline-none focus:text-blue-600 dark:focus:text-blue-500 rounded-none cursor-pointer px-0">
                             <option value="" className="text-zinc-500">SELECT CATEGORY...</option>
                             <optgroup label="EXPENSE">
-                                {categories.filter(c => c.type === 'EXPENSE').map(c => <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>)}
+                                {categories.filter((c: any) => c.type === 'EXPENSE').map((c: any) => <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>)}
                             </optgroup>
                             <optgroup label="INCOME">
-                                {categories.filter(c => c.type === 'INCOME').map(c => <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>)}
+                                {categories.filter((c: any) => c.type === 'INCOME').map((c: any) => <option key={c.id} value={c.id}>{c.name.toUpperCase()}</option>)}
                             </optgroup>
                         </select>
                     </div>

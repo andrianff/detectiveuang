@@ -153,7 +153,7 @@ export default async function DashboardPage({
                         </div>
                     ) : (
                         <div className="divide-y divide-black/10 dark:divide-white/10 border-t border-b border-black/10 dark:border-white/10">
-                            {recentTransactions.map(tx => {
+                            {recentTransactions.map((tx: any) => {
                                 const isIncome = tx.category?.type === 'INCOME'
                                 return (
                                     <div key={tx.id} className="py-6 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-black/5 dark:hover:bg-white/5 px-4 -mx-4 transition-colors relative group">

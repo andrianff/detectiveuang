@@ -128,7 +128,7 @@ export default async function TransactionsArchivePage({
                     </div>
                 ) : (
                     <div className="divide-y divide-black/10 dark:divide-white/10 border-t border-b border-black/10 dark:border-white/10">
-                        {transactions.map(tx => {
+                        {transactions.map((tx: any) => {
                             const isIncome = tx.category?.type === 'INCOME'
                             const txDate = new Date(tx.transactionDate).toLocaleDateString('id-ID', {
                                 day: '2-digit', month: 'short', year: 'numeric'
