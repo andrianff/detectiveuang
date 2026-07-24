@@ -6,7 +6,7 @@ import { ArrowLeft } from 'lucide-react'
 
 export default async function NewPocketPage() {
     const categories = await getCategories()
-    const expenseCategories = categories.filter(c => c.type === 'EXPENSE')
+    const expenseCategories = categories.filter((c: any) => c.type === 'EXPENSE')
 
     return (
         <div className="max-w-4xl mx-auto pb-24 md:pb-8">
