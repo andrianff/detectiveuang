@@ -70,7 +70,7 @@ export default async function NewPocketPage() {
                             {expenseCategories.length === 0 ? (
                                 <p className="text-sm font-semibold text-zinc-500">NO EXPENSE CATEGORIES FOUND</p>
                             ) : (
-                                expenseCategories.map(category => (
+                                expenseCategories.map((category: any) => (
                                     <label key={category.id} className="flex items-center gap-4 p-4 border border-black/10 dark:border-white/10 cursor-pointer hover:bg-black/5 dark:hover:bg-white/5 transition-colors has-[:checked]:border-blue-600 dark:has-[:checked]:border-blue-500 has-[:checked]:bg-blue-50/50 dark:has-[:checked]:bg-blue-950/20">
                                         <input type="checkbox" name="categoryIds" value={category.id} className="w-4 h-4 rounded-none text-blue-600 border-black/20 dark:border-white/20 focus:ring-blue-600" />
                                         <span className="text-xs font-bold uppercase tracking-widest">{category.name}</span>
