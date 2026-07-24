@@ -9,7 +9,7 @@ export default async function BudgetPage() {
     const categories = await getCategories()
 
     // Calculate Unallocated Percentage
-    const allocatedPercentage = pockets.reduce((acc, curr) => acc + curr.percentage, 0)
+    const allocatedPercentage = pockets.reduce((acc: number, curr: any) => acc + curr.percentage, 0)
     const unallocatedPercentage = Math.max(0, 100 - allocatedPercentage)
 
     return (
