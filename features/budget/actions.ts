@@ -27,7 +27,7 @@ export async function getCurrentMonthIncome() {
         select: { amount: true }
     })
 
-    return incomeTransactions.reduce((acc, curr) => acc + curr.amount, 0)
+    return incomeTransactions.reduce((acc: number, curr: any) => acc + curr.amount, 0)
 }
 
 // 2. Dapatkan Kantong Alokasi beserta pemakaiannya
@@ -63,7 +63,7 @@ export async function getAllocationPockets() {
             select: { amount: true }
         })
 
-        const spent = expenses.reduce((acc, curr) => acc + curr.amount, 0)
+        const spent = expenses.reduce((acc: number, curr: any) => acc + curr.amount, 0)
         return { ...pocket, spent }
     }))
 

@@ -33,7 +33,7 @@ export async function chatWithAdvisor(history: ChatMessage[], newMessage: string
     const wallets = await prisma.wallet.findMany({
         where: { userId: user.id }
     })
-    const totalBalance = wallets.reduce((sum, w) => sum + w.balance, 0)
+    const totalBalance = wallets.reduce((sum: number, w: any) => sum + w.balance, 0)
 
     let totalIncome = 0
     let totalExpense = 0

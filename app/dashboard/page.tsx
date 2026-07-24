@@ -23,7 +23,7 @@ export default async function DashboardPage({
     const wallets = await prisma.wallet.findMany({
         where: { userId: user.id }
     })
-    const totalBalance = wallets.reduce((sum, wallet) => sum + wallet.balance, 0)
+    const totalBalance = wallets.reduce((sum: number, wallet: any) => sum + wallet.balance, 0)
 
     // Logika Filter Rentang Waktu (Mesin Waktu Interaktif)
     const filter = searchParams.filter || '30days'
