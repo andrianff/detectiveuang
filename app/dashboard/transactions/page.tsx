@@ -65,7 +65,7 @@ export default async function TransactionsArchivePage({
 
     let filteredIncome = 0
     let filteredExpense = 0
-    allFilteredTx.forEach(tx => {
+    allFilteredTx.forEach((tx: any) => {
         if (tx.category?.type === 'INCOME') filteredIncome += tx.amount
         if (tx.category?.type === 'EXPENSE') filteredExpense += tx.amount
     })

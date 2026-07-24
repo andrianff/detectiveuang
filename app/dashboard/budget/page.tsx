@@ -68,7 +68,7 @@ export default async function BudgetPage() {
                         <p className="text-sm text-zinc-500 uppercase tracking-widest font-semibold">NO POCKETS DEFINED YET</p>
                     </div>
                 ) : (
-                    pockets.map(pocket => {
+                    pockets.map((pocket: any) => {
                         const limit = (totalIncome * pocket.percentage) / 100
                         const spent = pocket.spent
                         const isOver = spent > limit
