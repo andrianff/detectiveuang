@@ -30,7 +30,7 @@ export async function createTransaction(formData: FormData) {
     const actualType = category.type
 
     // Kita gunakan Prisma $transaction agar jika salah satu gagal, semuanya dibatalkan (sangat aman)
-    await prisma.$transaction(async (tx) => {
+    await prisma.$transaction(async (tx: any) => {
         // 1. Catat riwayat transaksi
         await tx.transaction.create({
             data: {

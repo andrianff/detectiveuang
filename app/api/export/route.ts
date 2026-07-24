@@ -40,7 +40,7 @@ export async function GET(req: NextRequest) {
     // CSV Header
     let csvContent = "TANGGAL,TIPE,KATEGORI,DOMPET,JUDUL,CATATAN,NOMINAL\n"
 
-    transactions.forEach(tx => {
+    transactions.forEach((tx: any) => {
         const date = new Date(tx.transactionDate).toISOString().split('T')[0]
         const type = tx.category?.type || 'UNCATEGORIZED'
         const category = tx.category?.name || 'UNCATEGORIZED'
