@@ -2,7 +2,6 @@ import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 
 const prismaClientSingleton = () => {
-    // Kita tambahkan adapter penghubung di sini
     const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
     return new PrismaClient({ adapter })
 }
@@ -11,8 +10,10 @@ declare const globalThis: {
     prismaGlobal: ReturnType<typeof prismaClientSingleton>;
 } & typeof global;
 
+// FIX: Singleton aktif di semua environment (termasuk production/Vercel)
+// sehingga koneksi database tidak dibuat ulang setiap request (cold start)
 const prisma = globalThis.prismaGlobal ?? prismaClientSingleton()
 
 export default prisma
 
-if (process.env.NODE_ENV !== 'production') globalThis.prismaGlobal = prisma
+globalThis.prismaGlobal = prisma

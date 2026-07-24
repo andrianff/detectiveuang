@@ -1,6 +1,5 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/utils/supabase/server'
-import prisma from '@/lib/prisma'
 import Sidebar from '@/components/Sidebar'
 import MobileNav from '@/components/MobileNav'
 
@@ -10,25 +9,14 @@ export default async function DashboardLayout({
     children: React.ReactNode
 }) {
     const supabase = await createClient()
-
     const { data: { user }, error } = await supabase.auth.getUser()
 
     if (error || !user) {
         redirect('/login')
     }
 
-    await prisma.user.upsert({
-        where: { id: user.id },
-        update: {
-            email: user.email!,
-            name: user.user_metadata?.name || 'User',
-        },
-        create: {
-            id: user.id, 
-            email: user.email!,
-            name: user.user_metadata?.name || 'User',
-        },
-    })
+    // FIX #3: Hapus upsert dari sini - sudah dipindahkan ke login/signup action
+    // sehingga query database tidak lagi dijalankan di setiap navigasi halaman
 
     return (
         <div className="flex min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] text-zinc-900 dark:text-zinc-50 relative selection:bg-blue-600 selection:text-white dark:selection:bg-blue-500 dark:selection:text-black">

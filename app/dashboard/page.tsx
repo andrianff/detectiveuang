@@ -18,14 +18,7 @@ export default async function DashboardPage({
         redirect('/login')
     }
 
-    const dbUser = await prisma.user.findUnique({ where: { id: user.id } })
-
-    const wallets = await prisma.wallet.findMany({
-        where: { userId: user.id }
-    })
-    const totalBalance = wallets.reduce((sum: number, wallet: any) => sum + wallet.balance, 0)
-
-    // Logika Filter Rentang Waktu (Mesin Waktu Interaktif)
+    // Logika Filter Rentang Waktu
     const filter = searchParams.filter || '30days'
     let filterDate: Date | undefined = new Date()
 
@@ -36,31 +29,37 @@ export default async function DashboardPage({
     } else if (filter === '30days') {
         filterDate.setDate(filterDate.getDate() - 30)
     } else if (filter === 'all') {
-        filterDate = undefined // Tidak ada batasan tanggal
+        filterDate = undefined
     }
 
-    // Recent ledger tetap 5 terbaru (tidak terpengaruh filter untuk konsistensi tampilan)
-    const recentTransactions = await prisma.transaction.findMany({
-        where: { wallet: { userId: user.id } },
-        orderBy: { transactionDate: 'desc' },
-        take: 5,
-        include: { category: true, wallet: true }
-    })
+    // FIX #4: Jalankan semua query secara PARALEL dengan Promise.all
+    // Sebelumnya: 4 query berurutan (total ~4x latency)
+    // Sekarang: 4 query bersamaan (total ~1x latency query terlambat)
+    const [dbUser, wallets, recentTransactions, filteredTransactions] = await Promise.all([
+        prisma.user.findUnique({ where: { id: user.id } }),
+        prisma.wallet.findMany({ where: { userId: user.id } }),
+        prisma.transaction.findMany({
+            where: { wallet: { userId: user.id } },
+            orderBy: { transactionDate: 'desc' },
+            take: 5,
+            include: { category: true, wallet: true }
+        }),
+        prisma.transaction.findMany({
+            where: {
+                wallet: { userId: user.id },
+                ...(filterDate ? { transactionDate: { gte: filterDate } } : {})
+            },
+            include: { category: true }
+        })
+    ])
 
-    // Kalkulasi Income & Expense berdasarkan rentang waktu yang difilter!
+    const totalBalance = wallets.reduce((sum: number, wallet: any) => sum + wallet.balance, 0)
+
     let totalIncome = 0
     let totalExpense = 0
-    const filteredTransactions = await prisma.transaction.findMany({
-        where: { 
-            wallet: { userId: user.id },
-            ...(filterDate ? { transactionDate: { gte: filterDate } } : {})
-        },
-        include: { category: true }
-    })
-
     for (const tx of filteredTransactions) {
-        if (tx.category?.type === 'INCOME') totalIncome += tx.amount
-        if (tx.category?.type === 'EXPENSE') totalExpense += tx.amount
+        if ((tx as any).category?.type === 'INCOME') totalIncome += tx.amount
+        if ((tx as any).category?.type === 'EXPENSE') totalExpense += tx.amount
     }
 
     return (
